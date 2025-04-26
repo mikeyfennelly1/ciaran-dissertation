@@ -1,1 +1,35 @@
 = convolutional neural network for image classification
+:toc:
+
+== Relevant Reading
+
+https://www.youtube.com/watch?v=jztwpsIzEGc[Video on how to create a general convolutional neural network for binary classification.]
+
+https://github.com/nicknochnack/ImageClassification/tree/main[Source code for reference convnet project.]
+
+== Notes on file structure
+
+=== The actual model file
+
+This repository contains source code for creating the model, but the output of the model is in a file format with the extension <filename>.h5. This can be found at the https://github.com/mikeyfennelly1/ciaran-dissertation/tree/main/model-src/models[/model-source/models/ directory of this repo.]
+
+This model can be used in python with the Tensorflow Keras library function `load_model(<model_filename>.h5)`. This will return an object with methods on it to perform operations with this model, which wil return a floating point number result between 0.0 and 1.0. Here is a code example:
+
+[source, python]
+----
+new_model = load_model('imageclassifier.h5')
+new_model.predict(np.expand_dims(resize/255, 0))
+----
+
+The output of the above code will look something like this:
+
+[source, bash]
+----
+# an array type that contains a value (in this case 0.019...) and a data type for 
+# that value, in this case a 32 bit floating point number.
+array([[0.01972741]], dtype=float32)
+----
+
+=== Using the model
+
+Provided you have the model (`<filename>.h5`) and Tensorflow+Keras, you can load and use the model in any python script. The code in `model-sources/main.ipynb` is at this point no longer of use. The model will be interacted with, as of the above usage, and the returned value from calling the `<model>.predict` function can be used to give a boolean value (true/false) as to whether the model thinks it has a positive or not. You can use a conditional with this value, to decide as such.
